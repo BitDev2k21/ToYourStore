@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.OrderDetailsFragment">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/green" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="40dp"
+        android:elevation="100dp"
+        android:paddingBottom="30dp"
+        app:cardCornerRadius="20dp"
+        app:strokeColor="#E2E2E2"
+        app:strokeWidth="1dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/llButton">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imgOrder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/image_parle_ji" />
+
+                        <TextView
+                            android:id="@+id/txtOrderNo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:fontFamily="@font/opensans_regular"
+                            android:text="Order Number: 01234"
+                            android:textColor="#757575"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/green" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:lineSpacingExtra="13.8sp"
+                                android:padding="5dp"
+                                android:text="Product Name:"
+                                android:textColor="#757575"
+                                android:textSize="11.3sp"
+                                android:textStyle="normal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:lineSpacingExtra="13.8sp"
+                                android:padding="5dp"
+                                android:text="Shop Number:"
+                                android:textColor="#757575"
+                                android:textSize="11.3sp"
+                                android:textStyle="normal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:lineSpacingExtra="13.8sp"
+                                android:padding="5dp"
+                                android:text="Shop Name:"
+                                android:textColor="#757575"
+                                android:textSize="11.3sp"
+                                android:textStyle="normal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:lineSpacingExtra="13.8sp"
+                                android:padding="5dp"
+                                android:text="Area:"
+                                android:textColor="#757575"
+                                android:textSize="11.3sp"
+                                android:textStyle="normal" />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:lineSpacingExtra="13.8sp"
+                                android:padding="5dp"
+                                android:text="Sales Person:"
+                                android:textColor="#757575"
+                                android:textSize="11.3sp"
+                                android:textStyle="normal" />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:lineSpacingExtra="13.8sp"
+                                android:padding="5dp"
+                                android:text="No of Units:"
+                                android:textColor="#757575"
+                                android:textSize="11.3sp"
+                                android:textStyle="normal" />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:lineSpacingExtra="13.8sp"
+                                android:padding="5dp"
+                                android:text="Selling Price"
+                                android:textColor="#757575"
+                                android:textSize="11.3sp"
+
+                                android:textStyle="normal" />
+
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:id="@+id/txtProductName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_regular"
+                                android:lineSpacingExtra="13.8sp"
+                                android:padding="5dp"
+                                android:text="1"
+                                android:textColor="#49536f"
+                                android:textSize="11.3sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/txtShopNo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:lineSpacingExtra="13.8sp"
+                                android:padding="5dp"
+                                android:text="Umiya Store"
+                                android:textColor="#757575"
+                                android:textSize="11.3sp"
+                                android:textStyle="normal" />
+
+                            <TextView
+                                android:id="@+id/txtShopName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:lineSpacingExtra="13.8sp"
+                                android:padding="5dp"
+                                android:text="Pankajbhai"
+                                android:textColor="#757575"
+                                android:textSize="11.3sp"
+                                android:textStyle="normal" />
+
+                            <TextView
+                                android:id="@+id/txtArea"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:lineSpacingExtra="13.8sp"
+                                android:padding="5dp"
+                                android:text="Waghodiya"
+                                android:textColor="#757575"
+                                android:textSize="11.3sp"
+
+                                android:textStyle="normal" />
+
+
+                            <TextView
+                                android:id="@+id/txtSalesPeron"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:lineSpacingExtra="13.8sp"
+                                android:padding="5dp"
+                                android:text="Akshaybhai"
+                                android:textColor="#757575"
+                                android:textSize="11.3sp"
+                                android:textStyle="normal" />
+
+
+                            <TextView
+                                android:id="@+id/txtNoOfUnit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:lineSpacingExtra="13.8sp"
+                                android:padding="5dp"
+                                android:text="100"
+                                android:textColor="#757575"
+
+                                android:textSize="11.3sp"
+                                android:textStyle="normal" />
+
+
+                            <TextView
+                                android:id="@+id/txtSalPrice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:lineSpacingExtra="13.8sp"
+                                android:padding="5dp"
+                                android:text="₹5.0"
+                                android:textColor="#757575"
+                                android:textSize="11.3sp"
+
+                                android:textStyle="normal" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="#e6e6e6" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/opensans_regular"
+                            android:lineSpacingExtra="26.3sp"
+                            android:padding="5dp"
+                            android:text="Final Total Price:"
+                            android:textColor="#49536f"
+
+                            android:textSize="12.5sp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/txtFinalPrice"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/opensans_semibold"
+                            android:lineSpacingExtra="26.3sp"
+                            android:padding="5dp"
+                            android:text="₹522.00"
+                            android:textColor="#49536f"
+                            android:textSize="12.5sp"
+
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/YourCardView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:elevation="100dp"
+                        android:paddingBottom="30dp"
+                        app:cardCornerRadius="14dp"
+                        app:strokeColor="#E2E2E2"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_weight="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:lineSpacingExtra="19sp"
+                                    android:padding="5dp"
+                                    android:text="@string/waiting_for_acceptance"
+                                    android:textColor="#49536f"
+                                    android:textSize="12.5sp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/iv_waiting_acceptance"
+                                    android:layout_gravity="center"
+                                    android:layout_width="@dimen/_15sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@drawable/icon_circle_unselect" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_weight="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:lineSpacingExtra="19sp"
+                                    android:padding="5dp"
+                                    android:text="@string/order_accepted"
+                                    android:textColor="#49536f"
+                                    android:textSize="12.5sp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/iv_order_accepted"
+                                    android:layout_gravity="center"
+                                    android:layout_width="@dimen/_15sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@drawable/icon_circle_unselect" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_weight="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:lineSpacingExtra="19sp"
+                                    android:padding="5dp"
+                                    android:text="@string/awaiting_delievery"
+                                    android:textColor="#49536f"
+                                    android:textSize="12.5sp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/iv_awaiting_Delivery"
+                                    android:layout_gravity="center"
+                                    android:layout_width="@dimen/_15sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@drawable/icon_circle_unselect" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_weight="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:lineSpacingExtra="19sp"
+                                    android:padding="5dp"
+                                    android:text="@string/delivered"
+                                    android:textColor="#49536f"
+                                    android:textSize="12.5sp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/iv_order_delivered"
+                                    android:layout_gravity="center"
+                                    android:layout_width="@dimen/_15sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@drawable/icon_circle_unselect" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+
+            <LinearLayout
+                android:id="@+id/llButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="30dp">
+
+                <LinearLayout
+                    android:id="@+id/llPaid"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/txtPaid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_dark_view_gray"
+                        android:drawableLeft="@drawable/icon_piad"
+                        android:drawablePadding="8dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:lineSpacingExtra="26.3sp"
+                        android:paddingLeft="36dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="36dp"
+                        android:paddingBottom="10dp"
+                        android:text="Paid"
+                        android:textColor="#ffffff"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>

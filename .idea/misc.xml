@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/ic_no_data.xml" value="0.22291666666666668" />
+        <entry key="app/src/main/res/drawable/progress_bg.xml" value="0.34010416666666665" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.2578125" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/fragment_inverntroy.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_order.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/fragment_order_details.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_order_list.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/fragment_register_distributor.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_register_distributor_complete.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_review.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_invertry.xml" value="0.284375" />
+        <entry key="app/src/main/res/layout/item_order_list.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_payment_list.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/layout_product_item.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/layout_recyler_view.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/layout_search_dialogue.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/layout_side_menu.xml" value="0.1578125" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>
