@@ -20,6 +20,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/lnr_google_sigin_in"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_view"
@@ -45,6 +46,7 @@
 
 
             <LinearLayout
+                android:id="@+id/lnr_facebook_sign_in"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -52,21 +54,12 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="10dp">
-
-                <ImageView
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/login_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_fb" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:fontFamily="@font/opensans_regular"
-                    android:text="Continue with Google"
-                    android:textColor="#757575"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:layout_gravity="center_horizontal"
+                    />
             </LinearLayout>
 
 

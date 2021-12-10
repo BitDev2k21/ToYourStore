@@ -3,12 +3,15 @@ package com.toyourstore.ui
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
+import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
@@ -19,13 +22,17 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.toyourstore.R
+import com.toyourstore.api.ApiCallingRequest
 import com.toyourstore.preference.SessionData
 import com.toyourstore.ui.fragment.RegisterDistributorProcessFragment
+import com.toyourstore.utils.MyProgressDialog
 import com.toyourstore.utils.PopupUtils
 import de.footprinttech.wms.db.DataBaseHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.IOException
+import java.util.HashMap
 
 
 class MainActivity : AppCompatActivity() {
@@ -54,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var txtSideMenuName: TextView
     lateinit var txtSideMenyType: TextView
     lateinit var txtWorkForce: TextView
-
+    private lateinit var pd: MyProgressDialog
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch(Dispatchers.IO) {
@@ -93,6 +100,7 @@ class MainActivity : AppCompatActivity() {
         txtSales = findViewById(R.id.txtSales)
         txtOperators = findViewById(R.id.txtOperators)
         navController = findNavController(R.id.nav_host_fragment)
+        pd = MyProgressDialog(this, R.drawable.icons8_loader)
         imgMenu.setOnClickListener {
             drawerLayout.openDrawer(Gravity.LEFT)
         }
@@ -158,9 +166,8 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(Gravity.LEFT)
             navController.navigate(R.id.profileFragment)
         }
-
-        if (!SessionData.getInstance(this).isRegisterDis()) {
-            navController.navigate(R.id.registerDistributorProcessFragment)
+        if(!SessionData.getInstance(this@MainActivity).isRegisterDis()){
+            checkIfShopUpdated()
         }
 
         txtWorkForce.setOnClickListener {
@@ -213,5 +220,61 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun checkIfShopUpdated() {
+        pd.show()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val apiCallingRequest = ApiCallingRequest()
+            val apiToken = SessionData.getInstance(this@MainActivity).getToken()
+            val userId = SessionData.getInstance(this@MainActivity).getUserId()
+            val params = HashMap<String, String>()
+            params["user_id"] = userId?:""
+            params["api_token"] = apiToken?:""
+            try {
+                val responseOfLogin =
+                    apiCallingRequest.getUser(
+                        params
+                    )
+                Log.v("@@@","checkIfShopUpdated resp ${responseOfLogin.toString()} ")
+                withContext(Dispatchers.Main) {
+                    pd.cancel()
+                    if(responseOfLogin!=null &&  responseOfLogin.user!=null && responseOfLogin.user.size>0 ){
+                        val user = responseOfLogin.user.first()
+                        if(user.distributor_details!=null){
+                            val disDetails = user.distributor_details.first()
+                            val name = disDetails.name
+                            val owner_name = disDetails.owner_name
+                            val contact = disDetails.contact
+                            val working_hours = disDetails.working_hours
+                            val gst_no = disDetails.gst_no
+                            val routes = disDetails.routes
+                            val credit_period = disDetails.credit_period
+                            val address = disDetails.address
+                            val user_id = disDetails.user_id
+                            val state_id = disDetails.state_id
+                            val city_id = disDetails.city_id
+                            val status = disDetails.status
+                            if(
+                                name.isNullOrEmpty() ||owner_name.isNullOrEmpty() ||contact.isNullOrEmpty()||working_hours.isNullOrEmpty()||
+                                gst_no.isNullOrEmpty() ||routes.isNullOrEmpty() ||credit_period.isNullOrEmpty()||address.isNullOrEmpty()||
+                                user_id.isNullOrEmpty() ||state_id.isNullOrEmpty() ||city_id.isNullOrEmpty()||status.isNullOrEmpty()
+                            ){
+                                navController.navigate(R.id.registerDistributorProcessFragment)
+                            }else{
+                                navController.navigate(R.id.registerDistributorComplete)
+                                SessionData.getInstance(this@MainActivity).saveIsRegister(true)
+                                Toast.makeText(this@MainActivity, "Successfully Updated", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+            } catch (apiEx: Exception) {
+                Log.v("@@@","checkIfShopUpdated resp ${apiEx.message.toString()} ")
+                withContext(Dispatchers.Main) {
+                    pd.cancel()
+                }
+            }
+        }
     }
 }

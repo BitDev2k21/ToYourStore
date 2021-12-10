@@ -21,6 +21,12 @@ class ApiCallingRequest : SafeApiRequest() {
         return apiRequest { apiService.login(params) }
     }
 
+    suspend fun getUser(
+        params: HashMap<String, String>
+    ): GetUserResponse {
+        return apiRequest { apiService.getUser(params) }
+    }
+
 
     suspend fun apiCallingBusinessLine(
         params: HashMap<String, String>

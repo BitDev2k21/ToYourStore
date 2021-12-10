@@ -24,4 +24,8 @@
     <string name="awaiting_delievery">Awaiting Delievery</string>
     <string name="delivered">Delivered</string>
     <string name="contact_number">Contact Number</string>
+
+    <string name="facebook_app_id">1345668929169586</string>
+    <string name="fb_login_protocol_scheme">fb1345668929169586</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

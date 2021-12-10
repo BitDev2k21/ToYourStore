@@ -6,10 +6,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
-import android.widget.EditText
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.common.api.ApiException
 import com.toyourstore.R
@@ -24,6 +20,9 @@ import java.io.IOException
 import java.lang.Exception
 import java.util.HashMap
 import android.R.attr.password
+import android.widget.*
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -38,7 +37,7 @@ class RegisterActivity : BaseActivity() {
     private lateinit var edtConfirmPassword: EditText
     private lateinit var edtContactNumber: EditText
     private lateinit var pd: MyProgressDialog
-
+    private lateinit var lnr_google_sign_in:LinearLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -57,19 +56,25 @@ class RegisterActivity : BaseActivity() {
         edtConfirmPassword = findViewById(R.id.edtConfirmPassword)
         edtContactNumber = findViewById(R.id.edtContactNumber)
         pd = MyProgressDialog(this, R.drawable.icons8_loader)
+        lnr_google_sign_in = findViewById(R.id.lnr_google_sign_in)
         rlLoginSignUp.setOnClickListener {
             Log.e("Click", "=========")
             if (isValidateData()) {
+                val deviceTokenFB = SessionData.getInstance(applicationContext).getFirebaseToken()?:""
                 apiCallingForRegister(
                         edtName.text.toString().trim(),
                         edtEmail.text.toString().trim(),
                         edtPassword.text.toString().trim(),
-                    edtContactNumber.text.toString().trim()
+                    edtContactNumber.text.toString().trim(),
+                    deviceTokenFB
                 )
             }
         }
-        txtCreate.setOnClickListener {
 
+        lnr_google_sign_in.setOnClickListener {
+            GoogleSignIn()
+        }
+        txtCreate.setOnClickListener {
         }
     }
 
@@ -122,7 +127,7 @@ class RegisterActivity : BaseActivity() {
         }
     }
 
-    private fun apiCallingForRegister(name: String, email: String, password: String, contact: String) {
+    private fun apiCallingForRegister(name: String, email: String, password: String, contact: String, tokenFB: String) {
         pd.show()
         lifecycleScope.launch(Dispatchers.IO) {
             val apiCallingRequest = ApiCallingRequest()
@@ -132,6 +137,8 @@ class RegisterActivity : BaseActivity() {
             params["password"] = password
             params["user_type"] = "distributor"
             params["contact"] = contact
+            params["social_id"] = ""
+            params["device_token"] = tokenFB
             //contact
             try {
                 val responseOfRegister = apiCallingRequest.apiCallingRegister(params)
@@ -163,5 +170,139 @@ class RegisterActivity : BaseActivity() {
         }
     }
 
+    private fun apiCallingForSocialLogin(email: String, socialName: String,socialID: String, deviceToken: String) {
+        pd.show()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val apiCallingRequest = ApiCallingRequest()
+            val params = HashMap<String, String>()
+            params["email"] = email
+            params["user_type"] = "distributor"
+            params["email"] = email
+            params["social_id"] = socialID
+            params["device_token"] = deviceToken
+            params["name"] = socialName
+            params["contact"] = ""
+            //contact
+            try {
+                val responseOfRegister = apiCallingRequest.apiCallingRegister(params)
+                Log.v("@@@"," resp : "+responseOfRegister.message)
+                if(responseOfRegister.user!=null && responseOfRegister.user!!.email!=null){
+                    withContext(Dispatchers.Main) {
+                        pd.cancel()
+                        PopupUtils.alertMessageWithCallBack(this@RegisterActivity, "successful user registration", {
+                            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                            finishAffinity()
+                        })
+                    }
+                }else{
+                    withContext(Dispatchers.Main) {
+                        pd.cancel()
+                        Toast.makeText(this@RegisterActivity,""+responseOfRegister.message,Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+            } catch (apiEx: Exception) {
+                Log.v("@@@"," exception : "+apiEx.message)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@RegisterActivity,"Something went wrong",Toast.LENGTH_SHORT).show()
+                    pd.cancel()
+                }
+            }
+        }
+    }
+
+    private fun isUserSignedIn(): Boolean {
+        val account = com.google.android.gms.auth.api.signin.GoogleSignIn.getLastSignedInAccount(this)
+        return account != null
+    }
+
+    fun getGoogleSinginClient() : GoogleSignInClient {
+        /**
+         * Configure sign-in to request the user's ID, email address, and basic
+         * profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+         */
+        val gso = GoogleSignInOptions
+            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .requestProfile()
+            .build()
+        /**
+         * Build a GoogleSignInClient with the options specified by gso.
+         */
+        return com.google.android.gms.auth.api.signin.GoogleSignIn.getClient(this, gso);
+    }
+
+    private fun GoogleSignIn(){
+        val signInIntent = getGoogleSinginClient().signInIntent
+        startActivityForResult(signInIntent, LoginActivity.RC_SIGN_IN)
+//        if (!isUserSignedIn()){
+//            val signInIntent = getGoogleSinginClient().signInIntent
+//            startActivityForResult(signInIntent, LoginActivity.RC_SIGN_IN)
+//        } else {
+//            Toast.makeText(this, " User already signed-in ", Toast.LENGTH_SHORT).show()
+//        }
+    }
+
+    private fun signout() {
+        if (isUserSignedIn()){
+            getGoogleSinginClient().signOut().addOnCompleteListener {
+                if (it.isSuccessful){
+                    Toast.makeText(this, " Signed out ", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, " Error ", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    var socialID = ""
+    var deviceToken = ""
+    var socialName = ""
+    var socialemail = ""
+    private fun handleSignData(data: Intent?) {
+        // The Task returned from this call is always completed, no need to attach
+        // a listener.
+        com.google.android.gms.auth.api.signin.GoogleSignIn.getSignedInAccountFromIntent(data)
+            .addOnCompleteListener {
+                "isSuccessful ${it.isSuccessful}".print()
+                if (it.isSuccessful){
+                    // user successfully logged-in
+                    "account ${it.result?.account}".print()
+                    "displayName ${it.result?.displayName}".print()
+                    "Email ${it.result?.email}".print()
+                    try {
+                        socialID = it.result?.id.toString()
+                        deviceToken = it.result?.idToken.toString()
+                        socialName = it.result?.displayName.toString()
+                        socialemail = it.result?.email.toString()
+                        val deviceTokenFB = SessionData.getInstance(applicationContext).getFirebaseToken()?:""
+                        apiCallingForSocialLogin(socialemail,socialName,socialID,deviceTokenFB)
+                    }catch (ex:Exception){
+                        Log.v(LoginActivity.TAG_KOTLIN," Exception ${ex.message}")
+                    }
+                } else {
+                    // authentication failed
+                    "exception ${it.exception}".print()
+                }
+            }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == LoginActivity.RC_SIGN_IN) {
+            handleSignData(data)
+        }
+    }
+
+    companion object{
+        const val RC_SIGN_IN = 0
+        const val TAG_KOTLIN = "@@@TAG_KOTLIN"
+    }
+
+    fun Any.print(){
+        Log.v(TAG_KOTLIN, " $this")
+    }
 
 }
